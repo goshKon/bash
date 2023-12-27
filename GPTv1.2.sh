@@ -6,6 +6,9 @@ stat_old=$(systemctl status isc-dhcp-server.service | awk '/Active/{print $2}')
 echo "Current status of dnsmasq.service: $stat_new"
 echo "Current status of isc-dhcp-server.service: $stat_old"
 
+current_datetime=$(date +"%Y-%m-%d %H:%M:%S")
+echo "Текущая дата и время (по Москве): $current_datetime"
+
 orange=$(cat/proc/cpuinfo | grep "model name" | awk '{print $7}' | head -n 1)	#Результат 5
 rasp=$(cat/proc/cpuinfo | grep "model name" | awk '{print $7}' | head -n 1)	#Результат 3
 	if /cat/proc/cpuinfo | grep "model name" | awk '{print $7}' | head -n 1 == 5 
