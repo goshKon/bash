@@ -1,10 +1,14 @@
 #!/bin/sh
 
-orange=$(cat/proc/cpuinfo | grep "model name" | awk '{print $7}' | head -n 1)	#Результат 5
-rasp=$(cat/proc/cpuinfo | grep "model name" | awk '{print $7}' | head -n 1)	#Результат 3
-if /cat/proc/cpuinfo | grep "model name" | awk '{print $7}' | head -n 1 == 5 
+rasp_or_orange=$(cat/proc/cpuinfo | grep "model name" | awk '{print $7}' | head -n 1)	#orange=5, rasp=3.
+if [ "$rasp_or_orange" = "5" ]
 then  
-	etc/scripts/orange.sh 
+	echo "Starting orange script"
+ 	sleep 5
+	etc/scripts/orange.sh
+ 	
 else
+	echo "Starting rasp script"
+ 	sleep 5
 	etc/scripts/rasp.sh
 fi
