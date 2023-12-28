@@ -1,5 +1,5 @@
 #!/bin/bash
-date_rasp=$(date +"%Y-%m-%d %T")
+date_rasp=$(date +"%Y-%m-%d")
 stat_new=$(systemctl status dnsmasq.service | awk '/Active/{print $2}')
 stat_old=$(systemctl status isc-dhcp-server.service | awk '/Active/{print $2}')
 echo "Current status of dnsmasq.service: $stat_new"
@@ -11,9 +11,10 @@ sleep 4
 adb_result_formatted=$(adb shell date +"%Y-%m-%d")
 adb_result="${adb_result_formatted} $(date +"%T")"
 echo "Текущая дата ADB: ${adb_result}"
+
 sleep 4
 
-if [ "$date_rasp" = "$adb_result" ]
+if [ "date_rasp" = "adb_result_formatted" ]
 then
 echo "Дата совпадает, выполняю дальше скрипт."
 sleep 4
