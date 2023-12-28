@@ -40,7 +40,7 @@ fi
 while read -r line
  do
     echo "$line"
-    if [ $line == *"Initialization Sequence Completed"* ]
+    if [ "$line" == *"Initialization Sequence Completed"* ]
     then
         echo "Initialization Sequence Completed detected. Exiting the script."
 		sleep 2
