@@ -9,11 +9,11 @@ echo "Текущая дата Raspberry: ${date_rasp}"
 sleep 4
 
 adb_result_formatted=$(adb shell date +"%Y-%m-%d")
-adb_result="${adb_result_formatted} $(date +"%T")"
+adb_result="${adb_result_formatted}"
 echo "Текущая дата ADB: ${adb_result}"
 sleep 4
 
-if [ "date_rasp" == "adb_result" ]
+if [ "date_rasp"=="adb_result" ]
 then
 echo "Дата совпадает, выполняю дальше скрипт."
 sleep 4
