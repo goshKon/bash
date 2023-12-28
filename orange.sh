@@ -10,7 +10,7 @@ then
     elif
 #[ "$stat_new" = "active" ] || [ "$stat_new" = "inactive" ] 
 dhcl=$(grep "/sbin/ifconfig eth0 0.0.0.0 0.0.0.0 | dhclient" /etc/rc.local)
-if [ $dhcl == #/sbin/ifconfig eth0 0.0.0.0 0.0.0.0 | dhclient & ]
+ [ "$dhcl == #/sbin/ifconfig eth0 0.0.0.0 0.0.0.0 | dhclient &" ]
 	then
         s1=$(systemctl start dnsmasq.service)
         sleep 10
