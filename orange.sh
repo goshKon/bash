@@ -1,5 +1,6 @@
 #!/bin/sh
-
+dhcl=$(grep "/sbin/ifconfig eth0 0.0.0.0 0.0.0.0 | dhclient" /etc/rc.local)
+dhcl_com="# /sbin/ifconfig eth0 0.0.0.0 0.0.0.0 | dhclient &"
 stat_new=$(systemctl status dnsmasq.service | awk '/Active/{print $2}')
 
 echo "Current status of dnsmasq.service: $stat_new"
@@ -8,10 +9,16 @@ if /sbin/ifconfig tun0 | grep -q "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-0
 then
     echo "Initialization Sequence Completed"
     elif
-#[ "$stat_new" = "active" ] || [ "$stat_new" = "inactive" ] 
-dhcl=$(grep "/sbin/ifconfig eth0 0.0.0.0 0.0.0.0 | dhclient" /etc/rc.local)
- [ "dhcl"=="#/sbin/ifconfig eth0 0.0.0.0 0.0.0.0 | dhclient &" ]
+    
+[ "$dhcl" != "$dhcl_com" ] 
 	then
+ 			/sbin/ifconfig eth0 0.0.0.0 0.0.0.0 | dhclient & >/dev/null 2>&1
+			sleep 10
+			killall -15 openvpn
+			sleep 5
+			/usr/sbin/openvpn --config /etc/openvpn/client.ovpn & >/dev/null 2>&1
+			echo "Restarting DHCP"	
+   	else
         s1=$(systemctl start dnsmasq.service)
         sleep 10
         echo "Starting dnsmasq.service: $s1"
@@ -25,13 +32,8 @@ dhcl=$(grep "/sbin/ifconfig eth0 0.0.0.0 0.0.0.0 | dhclient" /etc/rc.local)
         /usr/sbin/openvpn --config /etc/openvpn/client.ovpn & >/dev/null 2>&1
         echo "Restarting VPN"
 		
-	else
-			/sbin/ifconfig eth0 0.0.0.0 0.0.0.0 | dhclient & >/dev/null 2>&1
-			sleep 10
-			killall -15 openvpn
-			sleep 5
-			/usr/sbin/openvpn --config /etc/openvpn/client.ovpn & >/dev/null 2>&1
-			echo "Restarting DHCP"	
+
+			
     
 fi
 # Добавлен код для проверки "Initialization Sequence Completed"
@@ -42,6 +44,7 @@ while read -r line
     then
         echo "Initialization Sequence Completed detected. Exiting the script."
 		sleep 2
+  exit 0
     fi
 	done
 	exit 0
