@@ -1,4 +1,8 @@
 #!/bin/bash
+if /sbin/ifconfig tun0 | grep -q "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00"
+then
+    echo "Initialization Sequence Completed"
+    else
 date_rasp=$(date +"%Y-%m-%d") # дата rasp
 fmount.sh
 echo "Текущая дата Raspberry: ${date_rasp}"
@@ -67,3 +71,14 @@ else
  	sleep 5
 	sh etc/scripts/rasp.sh
 fi
+# Добавлен код для проверки "Initialization Sequence Completed"
+while read -r line
+ do
+    echo "$line"
+    if [ $line == *"Initialization Sequence Completed"* ]
+    then
+        echo "Initialization Sequence Completed detected. Exiting the script."
+		sleep 2
+    fi
+	done
+	exit 0
