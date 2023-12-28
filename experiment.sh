@@ -13,7 +13,7 @@ adb_result="${adb_result_formatted} $(date +"%T")"
 echo "Текущая дата ADB: ${adb_result}"
 sleep 4
 
-if [ "date_rasp" = "adb_result" ]
+if [ "$date_rasp" = "$adb_result" ]
 then
 echo "Дата совпадает, выполняю дальше скрипт."
 sleep 4
