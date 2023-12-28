@@ -64,12 +64,12 @@ if [ "$rasp_or_orange" = "5" ]
 then  
 	echo "Starting orange script"
  	sleep 5
-	etc/scripts/orange.sh
+	sh etc/scripts/orange.sh
  	
 else
 	echo "Starting rasp script"
  	sleep 5
-	etc/scripts/rasp.sh
+	sh etc/scripts/rasp.sh
 fi
 fi
 # Добавлен код для проверки "Initialization Sequence Completed"
