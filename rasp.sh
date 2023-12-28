@@ -56,6 +56,7 @@ while read -r line
     then
         echo "Initialization Sequence Completed detected. Exiting the script."
 		sleep 2
+  exit 0
     fi
 	done
 	exit 0
