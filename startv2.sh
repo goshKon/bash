@@ -2,7 +2,7 @@
 if /sbin/ifconfig tun0 | grep -q "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00"
 then
     echo "Initialization Sequence Completed"
-    else
+else
 date_rasp=$(date +"%Y-%m-%d") # дата rasp
 fmount.sh
 echo "Текущая дата Raspberry: ${date_rasp}"
@@ -12,23 +12,22 @@ adb_result_formatted=$(adb shell date +"%Y-%m-%d") # переформатиро�
 adb_result="${adb_result_formatted}"
 echo "Текущая дата ADB: ${adb_result}"
 sleep 4
+
 dev1=$(adb devices | grep "device" | awk '{print $2}' | grep "device") # поиск в команде "device"
-if [ -z "$dev1" ] # проверка на работоспособность ADB
+	if [ -z "$dev1" ] # проверка на работоспособность ADB
 then
 echo "Device ADB no found"
 else
 pinging=$(adb shell ping -c 5 8.8.8.8)
-    if [ $pinging -ne 0 ] # проверка на пинг ADB
+    		if [ $pinging -ne 0 ] # проверка на пинг ADB
 then
 echo "Ошибка: Не удалось выполнить пинг." # пинг ADB не идет
-break
-    fi
-exit 0
+exit 1
+		fi
 #if [ "$pinging" >/dev/null 2>&1 ] # проверка на пинг ADB
 #echo "$pinging"
 #	then
-elif
-[ "date_rasp"=="adb_result_formatted" ] # проверка на корректность даты из adb в rasp
+		if [ "date_rasp"=="adb_result_formatted" ] # проверка на корректность даты из adb в rasp
 then
 echo "Дата совпадает, выполняю дальше скрипт."
 sleep 4
@@ -46,7 +45,6 @@ second=$(echo "$adb_result" | cut -d':' -f3)
 
 # Сформировать строку с новым форматом
 formatted_date="${year}-${month}-${day} ${hour}:${minute}:${second}"
-
 # Установить дату на Raspberry Pi
 date -s "${formatted_date}"
 
@@ -57,8 +55,9 @@ echo "Дата и время установлены на Raspberry Pi: ${formatt
 #break
 #fi
 #exit 0
-fi
-fi	
+		fi
+	fi	
+ fi	
 rasp_or_orange=$(cat/proc/cpuinfo | grep "model name" | awk '{print $7}' | head -n 1)	#orange=5, rasp=3.
 if [ "$rasp_or_orange" = "5" ]
 then  
