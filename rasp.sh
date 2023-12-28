@@ -3,7 +3,12 @@
 stat_old=$(systemctl status isc-dhcp-server.service | awk '/Active/{print $2}')
 
 echo "Current status of isc-dhcp-server.service: $stat_old"
-    if [ "$stat_old" = "active" ]
+
+if /sbin/ifconfig tun0 | grep -q "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00"
+then
+    echo "Initialization Sequence Completed"
+    elif
+    [ "$stat_old" = "active" ]
 	then
         pp=$(ping -c 5 172.81.0.1)
 		if [ $pp -eq 0 ] 
@@ -16,7 +21,7 @@ echo "Current status of isc-dhcp-server.service: $stat_old"
             /usr/sbin/openvpn --config /etc/openvpn/client.ovpn & >/dev/null 2>&1
 
 		fi   
-	fi
+fi
     elif 
 	[ "$stat_old" = "active" ] || ["$stat_old" = "inactive" ] 
 	then
@@ -44,11 +49,10 @@ echo "Current status of isc-dhcp-server.service: $stat_old"
 while read -r line
  do
     echo "$line"
-    if [[ $line==*"Initialization Sequence Completed"* ]]
+    if [ $line == *"Initialization Sequence Completed"* ]
     then
         echo "Initialization Sequence Completed detected. Exiting the script."
 		sleep 2
-        break
     fi
 	done
 	exit 0
