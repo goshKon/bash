@@ -4,7 +4,7 @@ stat_new=$(systemctl status dnsmasq.service | awk '/Active/{print $2}')
 
 echo "Current status of dnsmasq.service: $stat_new"
 
-if [ "$stat_new"="active" ]||[ "$stat_new"="inactive" ] 
+if [ "$stat_new" = "active" ] || [ "$stat_new" = "inactive" ] 
 	then
         s1=$(systemctl start dnsmasq.service)
         sleep 10
