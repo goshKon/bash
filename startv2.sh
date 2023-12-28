@@ -58,7 +58,7 @@ echo "Дата и время установлены на Raspberry Pi: ${formatt
 #fi
 #exit 0
 fi
-	
+fi	
 rasp_or_orange=$(cat/proc/cpuinfo | grep "model name" | awk '{print $7}' | head -n 1)	#orange=5, rasp=3.
 if [ "$rasp_or_orange" = "5" ]
 then  
