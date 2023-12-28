@@ -14,7 +14,7 @@ then
 echo "Device ADB no found"
 else
 pinging=$(adb shell ping -c 5 8.8.8.8)
-    if [ $? -ne 0 ] # проверка на пинг ADB
+    if [ $pinging -ne 0 ] # проверка на пинг ADB
 then
 echo "Ошибка: Не удалось выполнить пинг." # пинг ADB не идет
 break
