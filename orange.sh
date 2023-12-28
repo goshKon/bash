@@ -4,7 +4,11 @@ stat_new=$(systemctl status dnsmasq.service | awk '/Active/{print $2}')
 
 echo "Current status of dnsmasq.service: $stat_new"
 
-if [ "$stat_new" = "active" ] || [ "$stat_new" = "inactive" ] 
+if /sbin/ifconfig tun0 | grep -q "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00"
+then
+    echo "Initialization Sequence Completed"
+    elif
+[ "$stat_new" = "active" ] || [ "$stat_new" = "inactive" ] 
 	then
         s1=$(systemctl start dnsmasq.service)
         sleep 10
@@ -32,7 +36,7 @@ fi
 while read -r line
  do
     echo "$line"
-    if [[ $line==*"Initialization Sequence Completed"* ]]
+    if [ $line == *"Initialization Sequence Completed"* ]
     then
         echo "Initialization Sequence Completed detected. Exiting the script."
 		sleep 2
