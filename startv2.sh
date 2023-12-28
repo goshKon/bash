@@ -19,7 +19,7 @@ then
 echo "Device ADB no found"
 else
 pinging=$(adb shell ping -c 5 8.8.8.8)
-    		if [ $pinging -ne 0 ] # проверка на пинг ADB
+    		if [ $? -ne 0 ] # проверка на пинг ADB
 then
 echo "Ошибка: Не удалось выполнить пинг." # пинг ADB не идет
 exit 1
@@ -58,7 +58,7 @@ echo "Дата и время установлены на Raspberry Pi: ${formatt
 		fi
 	fi	
  fi	
-rasp_or_orange=$(cat/proc/cpuinfo | grep "model name" | awk '{print $7}' | head -n 1)	#orange=5, rasp=3.
+rasp_or_orange=$(cat /proc/cpuinfo | grep "model name" | awk '{print $7}' | head -n 1)	#orange=5, rasp=3.
 if [ "$rasp_or_orange" = "5" ]
 then  
 	echo "Starting orange script"
