@@ -8,7 +8,9 @@ if /sbin/ifconfig tun0 | grep -q "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-0
 then
     echo "Initialization Sequence Completed"
     elif
-[ "$stat_new" = "active" ] || [ "$stat_new" = "inactive" ] 
+#[ "$stat_new" = "active" ] || [ "$stat_new" = "inactive" ] 
+dhcl=$(grep "/sbin/ifconfig eth0 0.0.0.0 0.0.0.0 | dhclient" /etc/rc.local)
+if [ $dhcl == #/sbin/ifconfig eth0 0.0.0.0 0.0.0.0 | dhclient & ]
 	then
         s1=$(systemctl start dnsmasq.service)
         sleep 10
