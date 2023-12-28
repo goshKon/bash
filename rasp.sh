@@ -3,7 +3,7 @@
 stat_old=$(systemctl status isc-dhcp-server.service | awk '/Active/{print $2}')
 
 echo "Current status of isc-dhcp-server.service: $stat_old"
-    if [ "stat_old"="active" ]
+    if [ "$stat_old" = "active" ]
 	then
         pp=$(ping -c 5 172.81.0.1)
 		if [ $pp -eq 0 ] 
@@ -18,7 +18,7 @@ echo "Current status of isc-dhcp-server.service: $stat_old"
 		fi   
 	fi
     elif 
-	[ "stat_old"="active"||"stat_old"="inactive" ] 
+	[ "$stat_old" = "active" ] || ["$stat_old" = "inactive" ] 
 	then
         s3=$(systemctl start isc-dhcp-server.service)
         sleep 10
