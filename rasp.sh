@@ -46,7 +46,6 @@ fi
         /usr/sbin/openvpn --config /etc/openvpn/client.ovpn & >/dev/null 2>&1
         echo "FULL Restart VPN RASP"
     
-        
     
 # Добавлен код для проверки "Initialization Sequence Completed"
 while read -r line
@@ -56,7 +55,6 @@ while read -r line
     then
         echo "Initialization Sequence Completed detected. Exiting the script."
 		sleep 2
-  exit 0
     fi
 	done
 	exit 0
