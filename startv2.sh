@@ -55,10 +55,6 @@ echo "Дата и время установлены на Raspberry Pi: ${formatt
 #exit 0
 fi
 	
-if /sbin/ifconfig tun0 | grep -q "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00"
-then
-    echo "Initialization Sequence Completed"
-else
 rasp_or_orange=$(cat/proc/cpuinfo | grep "model name" | awk '{print $7}' | head -n 1)	#orange=5, rasp=3.
 if [ "$rasp_or_orange" = "5" ]
 then  
@@ -71,16 +67,3 @@ else
  	sleep 5
 	etc/scripts/rasp.sh
 fi
-fi
-# Добавлен код для проверки "Initialization Sequence Completed"
-while read -r line
- do
-    echo "$line"
-    if [[ $line==*"Initialization Sequence Completed"* ]]
-    then
-        echo "Initialization Sequence Completed detected. Exiting the script."
-		sleep 2
-        break
-    fi
-	done
-	exit 0
