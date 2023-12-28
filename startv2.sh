@@ -1,8 +1,5 @@
 #!/bin/bash
-if /sbin/ifconfig tun0 | grep -q "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00"
-then
-    echo "Initialization Sequence Completed"
-else
+
 date_rasp=$(date +"%Y-%m-%d") # дата rasp
 fmount.sh
 echo "Текущая дата Raspberry: ${date_rasp}"
@@ -57,9 +54,12 @@ echo "Дата и время установлены на Raspberry Pi: ${formatt
 #exit 0
 		fi
 	fi	
- fi	
+if /sbin/ifconfig tun0 | grep -q "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00"
+then
+echo "Initialization Sequence Completed"
+else
 rasp_or_orange=$(cat /proc/cpuinfo | grep "model name" | awk '{print $7}' | head -n 1)	#orange=5, rasp=3.
-if [ "$rasp_or_orange" = "5" ]
+	if [ "$rasp_or_orange" = "5" ]
 then  
 	echo "Starting orange script"
  	sleep 5
@@ -70,15 +70,22 @@ else
  	sleep 5
 	sh etc/scripts/rasp.sh
 fi
+	fi
+ # Добавлен код для проверки "Initialization Sequence Completed"
+ if grep -q 'Initialization Sequence Completed' "$0"
+ then
+ echo "tun is work! Exiting the script."
+ exit 0
+ fi
 # Добавлен код для проверки "Initialization Sequence Completed"
-while read -r line
- do
-    echo "$line"
-    if [ $line == *"Initialization Sequence Completed"* ]
-    then
-        echo "Initialization Sequence Completed detected. Exiting the script."
-		sleep 2
-  fi
- 		 done
+#while read -r line
+ #do
+  #  echo "$line"
+   # if [ $line == *"Initialization Sequence Completed"* ]
+    #then
+     #   echo "Initialization Sequence Completed detected. Exiting the script."
+	#	sleep 2
+  #fi
+ #		 done
     
-exit 0
+#exit 0
