@@ -37,15 +37,8 @@ then
     
 fi
 # Добавлен код для проверки "Initialization Sequence Completed"
-while read -r line
- do
-    echo "$line"
-    if [ "$line" == *"Initialization Sequence Completed"* ]
-    then
-        echo "Initialization Sequence Completed detected. Exiting the script."
-		sleep 2
-  fi
-	done
-    
-	
-	exit 0
+ if grep -q 'Initialization Sequence Completed' "$0"
+ then
+ echo "tun is work! Exiting the script."
+ exit 0
+ fi
