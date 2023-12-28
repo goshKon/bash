@@ -1,8 +1,5 @@
+#!/bin/bash
 date_rasp=$(date +"%Y-%m-%d") # дата rasp
-stat_new=$(systemctl status dnsmasq.service | awk '/Active/{print $2}')
-stat_old=$(systemctl status isc-dhcp-server.service | awk '/Active/{print $2}')
-echo "Current status of dnsmasq.service: $stat_new"
-echo "Current status of isc-dhcp-server.service: $stat_old"
 fmount.sh
 echo "Текущая дата Raspberry: ${date_rasp}"
 sleep 4
