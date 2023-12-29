@@ -24,7 +24,7 @@ exit 1
 #if [ "$pinging" >/dev/null 2>&1 ] # проверка на пинг ADB
 #echo "$pinging"
 #	then
-		if [ "date_rasp"=="adb_result_formatted" ] # проверка на корректность даты из adb в rasp
+		if [ "$date_rasp" = "$adb_result_formatted" ] # проверка на корректность даты из adb в rasp
 then
 echo "Дата совпадает, выполняю дальше скрипт."
 sleep 4
