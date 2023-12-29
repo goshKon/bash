@@ -1,8 +1,4 @@
 #!/bin/bash
-if /sbin/ifconfig tun0 | grep -q "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00"
-then
-echo "Initialization Sequence Completed"
-else
 date_rasp=$(date +"%Y-%m-%d") # дата rasp
 fmount.sh
 echo "Текущая дата Raspberry: ${date_rasp}"
@@ -58,7 +54,6 @@ echo "Дата и время установлены на Raspberry Pi: ${formatt
 #exit 0
 		fi
 	fi
- fi
 if /sbin/ifconfig tun0 | grep -q "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00"
 then
 echo "Initialization Sequence Completed"
