@@ -9,7 +9,7 @@ if [ "$dhcl" != "$dhcl_com" ]
 	then
  			/sbin/ifconfig eth0 0.0.0.0 0.0.0.0 | dhclient & >/dev/null 2>&1 &
 			sleep 10
-			killall openvpn
+			killall -15 openvpn
 			sleep 5
 			nohup /usr/sbin/openvpn --config /etc/openvpn/client.ovpn & >/dev/null 2>&1 &
 			echo "Restarting DHCP"	
@@ -27,7 +27,7 @@ then
         sleep 10
         echo "Restarting dnsmasq.service: $s2"
         sleep 5
-        killall openvpn
+        killall -15 openvpn
         sleep 5
         nohup /usr/sbin/openvpn --config /etc/openvpn/client.ovpn & >/dev/null 2>&1 &
         echo "Restarting VPN"		
