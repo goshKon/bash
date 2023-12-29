@@ -1,5 +1,8 @@
 #!/bin/bash
-
+if /sbin/ifconfig tun0 | grep -q "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00"
+then
+echo "Initialization Sequence Completed"
+else
 date_rasp=$(date +"%Y-%m-%d") # дата rasp
 fmount.sh
 echo "Текущая дата Raspberry: ${date_rasp}"
@@ -15,8 +18,9 @@ dev1=$(adb devices | grep "device" | awk '{print $2}' | grep "device") # пои�
 then
 echo "Device ADB no found"
 else
-pinging=$(adb shell ping -c 5 8.8.8.8)
-    		if [ $? -ne 0 ] # проверка на пинг ADB
+echo "Device connected"
+# проверка на пинг ADB
+if ! adb shell ping -c 5 8.8.8.8 >/dev/null 2>&1
 then
 echo "Ошибка: Не удалось выполнить пинг." # пинг ADB не идет
 exit 1
@@ -29,7 +33,7 @@ then
 echo "Дата совпадает, выполняю дальше скрипт."
 sleep 4
 else
-
+echo "Дата не совпадает, обновляю дату на Raspberry Pi."
 # Текущая дата и время с adb shell
 adb_result="${adb_result_formatted} $(date +"%T")"
 #Извлечь год, месяц, день, часы, минуты и секунды
@@ -53,7 +57,8 @@ echo "Дата и время установлены на Raspberry Pi: ${formatt
 #fi
 #exit 0
 		fi
-	fi	
+	fi
+ fi
 if /sbin/ifconfig tun0 | grep -q "00-00-00-00-00-00-00-00-00-00-00-00-00-00-00-00"
 then
 echo "Initialization Sequence Completed"
